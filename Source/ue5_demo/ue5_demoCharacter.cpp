@@ -8,6 +8,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 
+DEFINE_LOG_CATEGORY_STATIC(DemoCharacter, Warning, All)
 //////////////////////////////////////////////////////////////////////////
 // Aue5_demoCharacter
 #include "TestCpp2a.h"
@@ -18,6 +19,9 @@ Aue5_demoCharacter::Aue5_demoCharacter()
 
 	// set our turn rate for input
 	TurnRateGamepad = 50.f;
+
+	WolkSpeed = 200.0f;
+	RunSpeed = 500.0f;
 
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
@@ -32,7 +36,8 @@ Aue5_demoCharacter::Aue5_demoCharacter()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	//GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	SetWolk();
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
@@ -77,6 +82,21 @@ void Aue5_demoCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &Aue5_demoCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &Aue5_demoCharacter::TouchStopped);
+
+	PlayerInputComponent->BindAction("Shift", IE_Pressed, this, &Aue5_demoCharacter::SetRun);
+	PlayerInputComponent->BindAction("Shift", IE_Released, this, &Aue5_demoCharacter::SetWolk);
+}
+
+void Aue5_demoCharacter::SetWolk()
+{
+	GetCharacterMovement()->MaxWalkSpeed = WolkSpeed;
+	UE_LOG(DemoCharacter, Warning, TEXT("SetWolk"));
+}
+
+void Aue5_demoCharacter::SetRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+	UE_LOG(DemoCharacter, Warning, TEXT("SetRun"));
 }
 
 void Aue5_demoCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
@@ -130,3 +150,4 @@ void Aue5_demoCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+

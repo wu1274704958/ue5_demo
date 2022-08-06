@@ -25,6 +25,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
+	UPROPERTY(VisibleAnywhere)
+	float WolkSpeed;
+	UPROPERTY(VisibleAnywhere)
+	float RunSpeed;
+
 protected:
 
 	/** Called for forwards/backward input */
@@ -55,6 +60,9 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
+
+	void SetWolk();
+	void SetRun();
 
 public:
 	/** Returns CameraBoom subobject **/
