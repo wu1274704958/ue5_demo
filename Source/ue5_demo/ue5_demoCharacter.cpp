@@ -56,6 +56,7 @@ Aue5_demoCharacter::Aue5_demoCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
 	TestCpp2a::Test();
+	UE_LOG(DemoCharacter,Warning,TEXT("Test Rider!!!"));
 }
 
 //////////////////////////////////////////////////////////////////////////
