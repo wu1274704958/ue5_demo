@@ -13,6 +13,7 @@ class Aue5_demoGameMode : public AGameModeBase
 
 public:
 	Aue5_demoGameMode();
+	virtual void StartPlay() override;
 };
 
 
