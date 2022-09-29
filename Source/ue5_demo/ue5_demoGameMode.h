@@ -14,6 +14,7 @@ class Aue5_demoGameMode : public AGameModeBase
 public:
 	Aue5_demoGameMode();
 	virtual void StartPlay() override;
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 };
 
 

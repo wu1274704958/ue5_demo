@@ -45,3 +45,10 @@ void Aue5_demoGameMode::StartPlay()
 	if(noNone)
 		UE_LOG(LogFindCamera,Warning,TEXT("Not Find Camera"));
 }
+
+void Aue5_demoGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	UWorld* World = GetWorld();
+	World->GetGameInstance()->GetEngine()->LocalPlayerClass = UMyPlayer::StaticClass();
+	Super::InitGame(MapName, Options, ErrorMessage);
+}
