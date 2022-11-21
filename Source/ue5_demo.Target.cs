@@ -10,5 +10,6 @@ public class ue5_demoTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("ue5_demo");
+		CppStandard = CppStandardVersion.Cpp20;
 	}
 }

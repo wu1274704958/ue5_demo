@@ -7,6 +7,12 @@
 
 DEFINE_LOG_CATEGORY_STATIC(MySpectatorPawn, Warning, All)
 
+AMySpectatorPawn::AMySpectatorPawn()
+{
+	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
+	Camera->SetupAttachment(RootComponent);
+}
+
 void AMySpectatorPawn::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -33,4 +39,10 @@ void AMySpectatorPawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 	}
 
 	GetActorEyesViewPoint(OutResult.Location, OutResult.Rotation);
+}
+
+void AMySpectatorPawn::SetupPlayerInputComponent(UInputComponent* InInputComponent)
+{
+	InInputComponent->BindAxis("Turn Right / Left Mouse",this,&APawn::AddControllerYawInput);
+	InInputComponent->BindAxis("Look Up / Down Mouse",this,&APawn::AddControllerPitchInput);
 }

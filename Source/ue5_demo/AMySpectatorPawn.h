@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/SpectatorPawn.h"
 #include "UObject/Object.h"
 #include "AMySpectatorPawn.generated.h"
@@ -15,6 +16,11 @@ class UE5_DEMO_API AMySpectatorPawn : public ASpectatorPawn
 {
 	GENERATED_BODY()
 public:
+	AMySpectatorPawn();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* InInputComponent) override;
+protected:
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* Camera;
 };
