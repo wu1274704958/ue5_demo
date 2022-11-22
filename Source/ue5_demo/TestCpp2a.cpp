@@ -18,7 +18,7 @@ TestCpp2a::~TestCpp2a()
 
 void TestCpp2a::Test()
 {
-	// auto str = std::format("HelloWorld {}"sv,20);
-	// auto fstr = FString(str.c_str());
-	// UE_LOG(TESTCPP2a,Warning,TEXT("%s"),*fstr);
+	 auto str = std::format("HelloWorld {}"sv,20);
+	 auto fstr = FString(str.c_str());
+	 UE_LOG(TESTCPP2a,Warning,TEXT("%s"),*fstr);
 }

@@ -4,13 +4,22 @@
 
 #include "AMySpectatorPawn.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(MySpectatorPawn, Warning, All)
 
 AMySpectatorPawn::AMySpectatorPawn()
 {
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
+	CameraBoom->SetupAttachment(RootComponent);
+	CameraBoom->TargetArmLength = 10.0f;
+	CameraBoom->bUsePawnControlRotation = true;
+	
+	TurnRateGamepad = 50.f;
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(RootComponent);
+	Camera->SetupAttachment(CameraBoom,USpringArmComponent::SocketName);
+	Camera->bUsePawnControlRotation = false;
+
 }
 
 void AMySpectatorPawn::PossessedBy(AController* NewController)
@@ -43,6 +52,19 @@ void AMySpectatorPawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 
 void AMySpectatorPawn::SetupPlayerInputComponent(UInputComponent* InInputComponent)
 {
-	InInputComponent->BindAxis("Turn Right / Left Mouse",this,&APawn::AddControllerYawInput);
-	InInputComponent->BindAxis("Look Up / Down Mouse",this,&APawn::AddControllerPitchInput);
+	InInputComponent->BindAxis("Turn Right / Left Mouse",this,&AMySpectatorPawn::TurnAtRate);
+	InInputComponent->BindAxis("Look Up / Down Mouse",this,&AMySpectatorPawn::LookUpAtRate);
+}
+
+void AMySpectatorPawn::TurnAtRate(float Rate)
+{
+	UE_LOG(MySpectatorPawn,Warning,TEXT("TurnAtRate %f"),Rate);
+	// calculate delta for this frame from the rate information
+	AddControllerYawInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
+}
+
+void AMySpectatorPawn::LookUpAtRate(float Rate)
+{
+	// calculate delta for this frame from the rate information
+	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }

@@ -16,6 +16,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFindCamera, Warning, All)
 
 Aue5_demoGameMode::Aue5_demoGameMode()
 {
+	TestCpp2a::Test();
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter"));
 	static ConstructorHelpers::FClassFinder<APawn> SpectatorPawnClass(TEXT("/Game/Test/BP_SpectatorPawn"));
@@ -30,6 +31,7 @@ Aue5_demoGameMode::Aue5_demoGameMode()
 void Aue5_demoGameMode::StartPlay()
 {
 	Super::StartPlay();
+	return;
 	bool noNone = true;
 	for(TActorIterator<AActor> it(GetWorld());it;++it)
 	{
