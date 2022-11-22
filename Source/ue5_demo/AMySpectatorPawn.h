@@ -23,6 +23,8 @@ public:
 	virtual void SetupPlayerInputComponent(UInputComponent* InInputComponent) override;
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
+	virtual void MoveForward(float Val) override;
+	virtual void MoveRight(float Val) override;
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* Camera;

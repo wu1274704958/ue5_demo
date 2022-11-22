@@ -54,11 +54,12 @@ void AMySpectatorPawn::SetupPlayerInputComponent(UInputComponent* InInputCompone
 {
 	InInputComponent->BindAxis("Turn Right / Left Mouse",this,&AMySpectatorPawn::TurnAtRate);
 	InInputComponent->BindAxis("Look Up / Down Mouse",this,&AMySpectatorPawn::LookUpAtRate);
+	InInputComponent->BindAxis("Move Forward / Backward", this, &AMySpectatorPawn::MoveForward);
+	InInputComponent->BindAxis("Move Right / Left", this, &AMySpectatorPawn::MoveRight);
 }
 
 void AMySpectatorPawn::TurnAtRate(float Rate)
 {
-	UE_LOG(MySpectatorPawn,Warning,TEXT("TurnAtRate %f"),Rate);
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
@@ -67,4 +68,16 @@ void AMySpectatorPawn::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
+}
+
+void AMySpectatorPawn::MoveForward(float Val)
+{
+	auto rot = GetControlRotation();
+	AddMovementInput(FRotationMatrix(rot).GetScaledAxis(EAxis::X),Val);
+}
+
+void AMySpectatorPawn::MoveRight(float Val)
+{
+	auto rot = GetControlRotation();
+	AddMovementInput(FRotationMatrix(rot).GetScaledAxis(EAxis::Y),Val);
 }
